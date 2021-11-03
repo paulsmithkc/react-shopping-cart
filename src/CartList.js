@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import { nanoid } from 'nanoid';
 import _ from 'lodash';
 import CartItem from './CartItem';
 
 function CartList() {
   const [items, setItems] = useState([
-    { id: 1, name: 'Hat', quantity: 2 },
-    { id: 2, name: 'Tie', quantity: 2 },
-    { id: 3, name: 'Belt', quantity: 1 },
+    { id: nanoid(), name: 'Hat', quantity: 2 },
+    { id: nanoid(), name: 'Tie', quantity: 2 },
+    { id: nanoid(), name: 'Belt', quantity: 1 },
   ]);
 
   function addItem(item) {
@@ -48,7 +49,7 @@ function CartList() {
   }
 
   function onAddItem(evt) {
-    addItem({ id: items.length + 1, name: '', quantity: 1 });
+    addItem({ id: nanoid(), name: '', quantity: 1 });
   }
 
   let itemCount = 0;
