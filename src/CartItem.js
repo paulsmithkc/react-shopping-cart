@@ -2,6 +2,13 @@ import './CartItem.css';
 
 function CartItem({ item, onNameChange, onQuantityAdd, onQuantityRemove }) {
   const id = `item-${item.id}`;
+
+  function getNameInputClasses() {
+    let classes = 'CartItem-name form-control';
+    classes += item.name ? ' is-valid' : ' is-invalid';
+    return classes;
+  }
+
   return (
     <div id={id} className="CartItem d-flex align-items-center p-1">
       <label htmlFor={id + '-name'} className="visually-hidden">
@@ -11,7 +18,7 @@ function CartItem({ item, onNameChange, onQuantityAdd, onQuantityRemove }) {
         id={id + '-name'}
         placeholder="Enter name..."
         value={item.name}
-        className="CartItem-name form-control"
+        className={getNameInputClasses()}
         onChange={(evt) => onNameChange(evt, item)}
       />
       <label htmlFor={id + '-quantity'} className="visually-hidden">
@@ -24,6 +31,7 @@ function CartItem({ item, onNameChange, onQuantityAdd, onQuantityRemove }) {
         type="button"
         className="CartItem-add btn btn-primary rounded-pill m-1"
         onClick={(evt) => onQuantityAdd(evt, item)}
+        disabled={item.quantity >= 10 && 'disabled'}
       >
         <span>+</span>
         <span className="visually-hidden">Add</span>
