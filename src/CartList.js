@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import _ from 'lodash';
+import immer from 'immer';
 import CartItem from './CartItem';
 
 function CartList() {
@@ -11,17 +12,38 @@ function CartList() {
   ]);
 
   function addItem(item) {
-    setItems((x) => [...x, item]);
+    setItems(
+      immer((draft) => {
+        draft.push(item);
+      })
+    );
+    //setItems((x) => [...x, item]);
   }
 
   function updateItem(itemId, update) {
-    setItems((x) =>
-      _.map(x, (y) => (y.id === itemId ? { ...y, ...update } : y))
+    setItems(
+      immer((draft) => {
+        const itemIndex = draft.findIndex((y) => y.id === itemId);
+        if (itemIndex >= 0) {
+          draft[itemIndex] = { ...draft[itemIndex], ...update };
+        }
+      })
     );
+    // setItems((x) =>
+    //   _.map(x, (y) => (y.id === itemId ? { ...y, ...update } : y))
+    // );
   }
 
   function removeItem(itemId) {
-    setItems((x) => _.filter(x, (y) => y.id !== itemId));
+    setItems(
+      immer((draft) => {
+        const itemIndex = draft.findIndex((y) => y.id === itemId);
+        if (itemIndex >= 0) {
+          draft.splice(itemIndex, 1);
+        }
+      })
+    );
+    // setItems((x) => _.filter(x, (y) => y.id !== itemId));
   }
 
   function onNameChange(evt, item) {
