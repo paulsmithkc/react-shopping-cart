@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 
 function CartItem({ item, onNameChange, onQuantityAdd, onQuantityRemove }) {
   // const [ currentQuantity, setCurrentQuantity ] = useState(item.quantity);
@@ -22,14 +22,18 @@ function CartItem({ item, onNameChange, onQuantityAdd, onQuantityRemove }) {
 
   return (
     <div id={`item-${item.id}`} className="CartItem d-flex">
-      <label htmlFor={`item-${item.id}-name`}>Name</label>
+      <label htmlFor={`item-${item.id}-name`} className="visually-hidden">
+        Name
+      </label>
       <input
         id={`item-${item.id}-name`}
         value={item.name}
         className="CartItem-name form-control"
         onChange={(evt) => onNameChange(evt)}
       />
-      <label htmlFor={`item-${item.id}-quantity`}>Quantity</label>
+      <label htmlFor={`item-${item.id}-quantity`} className="visually-hidden">
+        Quantity
+      </label>
       <span id={`item-${item.id}-quantity`} className="CartItem-quantity m-3">
         {item.quantity}
       </span>
