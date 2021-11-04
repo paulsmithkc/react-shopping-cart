@@ -1,4 +1,5 @@
 // import { useState } from 'react';
+import './CartItem.css';
 
 function CartItem({ item, onNameChange, onQuantityAdd, onQuantityRemove }) {
   // const [ currentQuantity, setCurrentQuantity ] = useState(item.quantity);
@@ -20,6 +21,12 @@ function CartItem({ item, onNameChange, onQuantityAdd, onQuantityRemove }) {
   //   console.log('name change', newName);
   // }
 
+  function getNameInputClasses() {
+    let classes = 'CartItem-name form-control';
+    classes += item.name ? ' is-valid' : ' is-invalid';
+    return classes;
+  }
+
   return (
     <div id={`item-${item.id}`} className="CartItem d-flex">
       <label htmlFor={`item-${item.id}-name`} className="visually-hidden">
@@ -28,7 +35,9 @@ function CartItem({ item, onNameChange, onQuantityAdd, onQuantityRemove }) {
       <input
         id={`item-${item.id}-name`}
         value={item.name}
-        className="CartItem-name form-control"
+        //className={"CartItem-name form-control " + (item.name ? "is-valid" : "is-invalid")}
+        //className={`CartItem-name form-control ${item.name ? 'is-valid' : 'is-invalid'}`}
+        className={getNameInputClasses()}
         onChange={(evt) => onNameChange(evt)}
       />
       <label htmlFor={`item-${item.id}-quantity`} className="visually-hidden">
@@ -41,6 +50,7 @@ function CartItem({ item, onNameChange, onQuantityAdd, onQuantityRemove }) {
         type="button"
         className="CartItem-add btn btn-primary rounded-circle m-1"
         onClick={(evt) => onQuantityAdd(evt)}
+        disabled={item.quantity >= 10}
       >
         <span>+</span>
         <span className="visually-hidden">Add</span>
@@ -49,6 +59,7 @@ function CartItem({ item, onNameChange, onQuantityAdd, onQuantityRemove }) {
         type="button"
         className="CartItem-remove btn btn-danger rounded-circle m-1"
         onClick={(evt) => onQuantityRemove(evt)}
+        disabled={item.quantity <= 0}
       >
         <span>-</span>
         <span className="visually-hidden">remove</span>
